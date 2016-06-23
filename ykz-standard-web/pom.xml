@@ -8,7 +8,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
-		<res.tag>\{WJZS_RES_VERSION\}</res.tag>
+		<res.tag>\{YKZ_RES_VERSION\}</res.tag>
 	</properties>
 	
 	<build>
