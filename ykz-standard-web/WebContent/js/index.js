@@ -1,5 +1,3 @@
-20160621144449
-
 function IndexPage(){
 	this._init();
 }
