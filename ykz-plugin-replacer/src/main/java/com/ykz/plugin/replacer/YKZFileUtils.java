@@ -3,7 +3,6 @@ package com.ykz.plugin.replacer;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -12,7 +11,7 @@ public class YKZFileUtils {
 	public static String getExtension(File file) {
 		String DOT = ".";
 		String fileName = file.getName();
-		if (StringUtils.INDEX_NOT_FOUND == StringUtils.indexOf(fileName, DOT)){
+		if (StringUtils.INDEX_NOT_FOUND == StringUtils.indexOf(fileName, DOT)) {
 			return StringUtils.EMPTY;
 		}
 		String ext = StringUtils.substring(fileName, StringUtils.lastIndexOf(fileName, DOT));
@@ -20,7 +19,7 @@ public class YKZFileUtils {
 	}
 
 	public static Collection<File> getAllFiles() {
-		String[] FILE_TYPE = {"htm", "html", "jsp", "php", "asp", "aspx", "css", "js"};
+		String[] FILE_TYPE = { "htm", "html", "jsp", "php", "asp", "aspx", "css", "js" };
 		String baseDir = System.getProperty("user.dir");
 		Collection<File> fileList = FileUtils.listFiles(new File(baseDir), FILE_TYPE, true);
 		return fileList;

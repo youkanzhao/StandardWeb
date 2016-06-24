@@ -11,17 +11,16 @@ import org.apache.maven.plugin.MojoFailureException;
  * @phase validate
  */
 public class ReplaceMojo extends AbstractMojo {
-	
+
 	/**
 	 * @parameter
 	 */
 	private String replaceReplacement;
-	
+
 	/**
 	 * @parameter
 	 */
 	private String replaceToken;
-	
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		System.out.println("replace : token=" + replaceToken + " ==> replacement=" + replaceReplacement);

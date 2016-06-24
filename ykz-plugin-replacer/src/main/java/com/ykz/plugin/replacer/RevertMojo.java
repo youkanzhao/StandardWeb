@@ -16,12 +16,11 @@ public class RevertMojo extends AbstractMojo {
 	 * @parameter
 	 */
 	private String revertReplacement;
-	
+
 	/**
 	 * @parameter
 	 */
 	private String revertToken;
-	
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		System.out.println("revert: token=" + revertToken + " ==> replacement=" + revertReplacement);
