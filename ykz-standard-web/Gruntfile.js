@@ -210,7 +210,7 @@ module.exports = function(grunt) {
 						to: '<link rel="stylesheet" href="lib/css/<%= pkg.resLibName %>.min.css?$3>'
 					},
 					{
-						from: /<link(.*)href="lib\/bootstrap(.*)\.css(.*)>/g,
+						from: /<link(.*)href="lib\/(.*)\/css\/(.*)\.css(.*)>/g,
 						to: ''
 					},
 					{
