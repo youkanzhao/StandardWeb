@@ -3,4 +3,5 @@ a#alink{
 	font-size:30px;
 	color:red;
 	display: block;
+	float: left;
 }

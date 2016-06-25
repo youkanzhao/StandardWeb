@@ -22,6 +22,9 @@ IndexPage.prototype = {
 	},
 	getData  : function(){
 
+	},
+	getColumn : function(){
+
 	}
 };
 

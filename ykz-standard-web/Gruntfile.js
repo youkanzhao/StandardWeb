@@ -2,6 +2,9 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+		/*
+		 * start of grunt-contrib-clean
+		 */
 		clean: {
 			js: ['**/*.min.js',
 				'WebContent/lib/<%= pkg.resLibName %>.js'
@@ -10,10 +13,18 @@ module.exports = function(grunt) {
 				'**/*.min.css',
 				'WebContent/css/<%= pkg.resLibName %>.css'
 			],
-			fonts : [
+			fonts: [
 				'WebContent/fonts'
 			]
 		},
+		/*
+		 * end of grunt-contrib-clean
+		 */
+
+
+		/*
+		 * start of grunt-contrib-concat
+		 */
 		concat: {
 			options: {
 				separator: ';'
@@ -32,6 +43,14 @@ module.exports = function(grunt) {
 				dest: 'WebContent/css/<%= pkg.resLibName %>.css'
 			}
 		},
+		/*
+		 * end of grunt-contrib-concat
+		 */
+
+
+		/*
+		 * start of grunt-contrib-uglify
+		 */
 		uglify: {
 			options: {
 				banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
@@ -44,11 +63,26 @@ module.exports = function(grunt) {
 				}
 			}
 		},
+		/*
+		 * end of grunt-contrib-uglify
+		 */
+
+
+		/*
+		 * start of grunt-contrib-qunit
+		 */
 		qunit: {
 			files: ['WebContent/**/*.html']
 		},
+		/*
+		 * end of grunt-contrib-qunit
+		 */
+
+		/*
+		 * start of grunt-contrib-jshint
+		 */
 		jshint: {
-			files: ['Gruntfile.js', 'WebContent/js/**/*.js'],
+			files: ['Gruntfile.js', 'WebContent/js/**/*.js', '!*.min.js'],
 			options: {
 				globals: {
 					jQuery: true,
@@ -58,10 +92,24 @@ module.exports = function(grunt) {
 				}
 			}
 		},
+		/*
+		 * end of grunt-contrib-jshint
+		 */
+
+		/*
+		 * start of grunt-contrib-watch
+		 */
 		watch: {
 			files: ['<%= jshint.files %>'],
-			tasks: ['jshint', 'qunit']
+			tasks: ['jshint', 'concat', 'uglify', 'cssmin']
 		},
+		/*
+		 * end of grunt-contrib-watch
+		 */
+
+		/*
+		 * start of grunt-contrib-cssmin
+		 */
 		cssmin: {
 			target: {
 				files: [{
@@ -73,19 +121,27 @@ module.exports = function(grunt) {
 				}]
 			}
 		},
+		/*
+		 * end of grunt-contrib-cssmin
+		 */
+
+		/*
+		 * start of grunt-contrib-copy
+		 */
 		copy: {
 			main: {
-				files: [
-					{
-						expand: true,
-						filter: 'isFile',
-						flatten: true,
-						src: ['WebContent/lib/bootstrap/fonts/**'],
-						dest: 'WebContent/fonts'
-					}
-				],
-			},
+				files: [{
+					expand: true,
+					filter: 'isFile',
+					flatten: true,
+					src: ['WebContent/lib/bootstrap/fonts/**'],
+					dest: 'WebContent/fonts'
+				}],
+			}
 		}
+		/*
+		 * end of grunt-contrib-copy
+		 */
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-uglify');
