@@ -9,6 +9,9 @@ module.exports = function(grunt) {
 			css: [
 				'**/*.min.css',
 				'WebContent/css/<%= pkg.resLibName %>.css'
+			],
+			fonts : [
+				'WebContent/fonts'
 			]
 		},
 		concat: {
@@ -69,6 +72,19 @@ module.exports = function(grunt) {
 					ext: '.min.css'
 				}]
 			}
+		},
+		copy: {
+			main: {
+				files: [
+					{
+						expand: true,
+						filter: 'isFile',
+						flatten: true,
+						src: ['WebContent/lib/bootstrap/fonts/**'],
+						dest: 'WebContent/fonts'
+					}
+				],
+			},
 		}
 	});
 
@@ -79,9 +95,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
+	grunt.loadNpmTasks('grunt-contrib-copy');
 
 	grunt.registerTask('test', ['jshint', 'qunit']);
 
-	grunt.registerTask('default', ['jshint', 'clean', 'concat', 'uglify', 'cssmin']);
+	grunt.registerTask('default', ['clean', 'jshint', 'copy', 'concat', 'uglify', 'cssmin']);
 
 };
