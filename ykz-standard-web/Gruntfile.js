@@ -1,129 +1,127 @@
 module.exports = function(grunt) {
 
 	grunt.initConfig({
-		pkg: grunt.file.readJSON('package.json'),
-		/*
-		 * start of grunt-contrib-clean
-		 */
-		clean: {
-			js: ['**/*.min.js',
-				'WebContent/lib/<%= pkg.resLibName %>.js'
-			],
-			css: [
-				'**/*.min.css',
-				'WebContent/css/<%= pkg.resLibName %>.css'
-			],
-			fonts: [
-				'WebContent/fonts'
-			]
-		},
-		/*
-		 * end of grunt-contrib-clean
-		 */
-
-
-		/*
-		 * start of grunt-contrib-concat
-		 */
-		concat: {
-			options: {
-				separator: ';'
+			pkg: grunt.file.readJSON('package.json'),
+			/*
+			 * start of grunt-contrib-clean
+			 */
+			clean: {
+				dist: ['<%= pkg.distPath %>/**']
 			},
-			js: {
-				src: [
-					'WebContent/lib/jquery/jquery.js',
-					'WebContent/lib/bootstrap/js/bootstrap.js'
-				],
-				dest: 'WebContent/lib/<%= pkg.resLibName %>.js'
-			},
-			css: {
-				src: [
-					'WebContent/lib/bootstrap/css/*.css'
-				],
-				dest: 'WebContent/css/<%= pkg.resLibName %>.css'
-			}
-		},
-		/*
-		 * end of grunt-contrib-concat
-		 */
+			/*
+			 * end of grunt-contrib-clean
+			 */
 
 
-		/*
-		 * start of grunt-contrib-uglify
-		 */
-		uglify: {
-			options: {
-				banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
-			},
-			js: {
-				files: {
-					'WebContent/js/index.min.js': ['WebContent/js/index.js'],
-					'WebContent/lib/<%= pkg.resLibName %>.min.js': ['WebContent/lib/<%= pkg.resLibName %>.js']
-
+			/*
+			 * start of grunt-contrib-concat
+			 */
+			concat: {
+				options: {
+					separator: ';'
+				},
+				js: {
+					src: [
+						'WebContent/lib/jquery/jquery.js',
+						'WebContent/lib/bootstrap/js/bootstrap.js'
+					],
+					dest: '<%= pkg.distPath %>/lib/js/<%= pkg.resLibName %>.js'
+				},
+				css: {
+					src: [
+						'WebContent/lib/bootstrap/css/*.css'
+					],
+					dest: '<%= pkg.distPath %>/lib/css/<%= pkg.resLibName %>.css'
 				}
-			}
-		},
-		/*
-		 * end of grunt-contrib-uglify
-		 */
+			},
+			/*
+			 * end of grunt-contrib-concat
+			 */
 
 
-		/*
-		 * start of grunt-contrib-qunit
-		 */
-		qunit: {
-			files: ['WebContent/**/*.html']
-		},
-		/*
-		 * end of grunt-contrib-qunit
-		 */
+			/*
+			 * start of grunt-contrib-uglify
+			 */
+			uglify: {
+				options: {
+					banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+				},
+				js: {
+					files: {
+						'<%= pkg.distPath %>/js/index.min.js': ['WebContent/js/index.js'],
+						'<%= pkg.distPath %>/lib/js/<%= pkg.resLibName %>.min.js': ['<%= pkg.distPath %>/lib/js/<%= pkg.resLibName %>.js']
 
-		/*
-		 * start of grunt-contrib-jshint
-		 */
-		jshint: {
-			files: ['Gruntfile.js', 'WebContent/js/**/*.js', '!*.min.js'],
-			options: {
-				globals: {
-					jQuery: true,
-					console: true,
-					module: true,
-					document: true
+					}
 				}
-			}
-		},
-		/*
-		 * end of grunt-contrib-jshint
-		 */
+			},
+			/*
+			 * end of grunt-contrib-uglify
+			 */
 
-		/*
-		 * start of grunt-contrib-watch
-		 */
-		watch: {
-			files: ['<%= jshint.files %>'],
-			tasks: ['jshint', 'concat', 'uglify', 'cssmin']
-		},
-		/*
-		 * end of grunt-contrib-watch
-		 */
 
-		/*
-		 * start of grunt-contrib-cssmin
-		 */
-		cssmin: {
-			target: {
-				files: [{
-					expand: true,
-					cwd: 'WebContent/css',
-					src: ['*.css', '!*.min.css'],
-					dest: 'WebContent/css',
-					ext: '.min.css'
-				}]
+			/*
+			 * start of grunt-contrib-qunit
+			 */
+			qunit: {
+				files: ['WebContent/**/*.html']
+			},
+			/*
+			 * end of grunt-contrib-qunit
+			 */
+
+			/*
+			 * start of grunt-contrib-jshint
+			 */
+			jshint: {
+				files: ['Gruntfile.js', 'WebContent/js/**/*.js'],
+				options: {
+					globals: {
+						jQuery: true,
+						console: true,
+						module: true,
+						document: true
+					}
+				}
+			},
+			/*
+			 * end of grunt-contrib-jshint
+			 */
+
+			/*
+			 * start of grunt-contrib-watch
+			 */
+			watch: {
+				files: ['<%= jshint.files %>'],
+				tasks: ['jshint', 'concat', 'uglify', 'cssmin']
+			},
+			/*
+			 * end of grunt-contrib-watch
+			 */
+
+			/*
+			 * start of grunt-contrib-cssmin
+			 */
+			cssmin: {
+				target: {
+					files: [{
+						expand: true,
+						cwd: 'WebContent/css',
+						src: ['*.css', '!*.min.css'],
+						dest: '<%= pkg.distPath %>/css',
+						ext: '.min.css'
+					}, {
+						expand: true,
+						cwd: '<%= pkg.distPath %>/lib/css',
+						src: ['*.css', '!*.min.css'],
+						dest: '<%= pkg.distPath %>/lib/css',
+						ext: '.min.css'
+					}]
 			}
 		},
 		/*
 		 * end of grunt-contrib-cssmin
 		 */
+
 
 		/*
 		 * start of grunt-contrib-copy
@@ -135,7 +133,7 @@ module.exports = function(grunt) {
 					filter: 'isFile',
 					flatten: true,
 					src: ['WebContent/lib/bootstrap/fonts/**'],
-					dest: 'WebContent/fonts'
+					dest: '<%= pkg.distPath %>/lib/fonts'
 				}],
 			}
 		}
@@ -144,17 +142,17 @@ module.exports = function(grunt) {
 		 */
 	});
 
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-jshint');
-	grunt.loadNpmTasks('grunt-contrib-qunit');
-	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-contrib-concat');
-	grunt.loadNpmTasks('grunt-contrib-clean');
-	grunt.loadNpmTasks('grunt-contrib-cssmin');
-	grunt.loadNpmTasks('grunt-contrib-copy');
+grunt.loadNpmTasks('grunt-contrib-uglify');
+grunt.loadNpmTasks('grunt-contrib-jshint');
+grunt.loadNpmTasks('grunt-contrib-qunit');
+grunt.loadNpmTasks('grunt-contrib-watch');
+grunt.loadNpmTasks('grunt-contrib-concat');
+grunt.loadNpmTasks('grunt-contrib-clean');
+grunt.loadNpmTasks('grunt-contrib-cssmin');
+grunt.loadNpmTasks('grunt-contrib-copy');
 
-	grunt.registerTask('test', ['jshint', 'qunit']);
+grunt.registerTask('test', ['jshint', 'qunit']);
 
-	grunt.registerTask('default', ['clean', 'jshint', 'copy', 'concat', 'uglify', 'cssmin']);
+grunt.registerTask('default', ['clean', 'jshint', 'copy', 'concat', 'uglify', 'cssmin']);
 
 };
