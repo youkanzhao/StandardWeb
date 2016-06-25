@@ -7,7 +7,7 @@ IndexPage.prototype = {
 		var key = 'abc';
 		var data = {'sss' : 'sssValue'};
 		data[key] = 'abcValue';
-		console.info(data)
+		console.info(data);
 		this._bindEvent();
 	},
 	_bindEvent : function(){
@@ -23,7 +23,7 @@ IndexPage.prototype = {
 	getData  : function(){
 
 	}
-}
+};
 
 $(function(){
 	var indexPage = new IndexPage();

@@ -3,34 +3,46 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		clean: {
-			js: ["**/*.min.js"]
-		}
+			js: ['**/*.min.js', 
+				 'WebContent/lib/<%= pkg.resLibName %>.js'
+				],
+			css: [
+				'**/*.min.css',
+				'WebContent/css/<%= pkg.resLibName %>.css'
+			]
+		},
 		concat: {
 			options: {
 				separator: ';'
 			},
-			lib: {
+			js: {
 				src: [
 					'WebContent/lib/jquery/jquery.js',
 					'WebContent/lib/bootstrap/js/bootstrap.js'
 				],
-				dest: 'WebContent/lib/<%= pkg.jsLibName %>.js'
+				dest: 'WebContent/lib/<%= pkg.resLibName %>.js'
+			},
+			css: {
+				src: [
+					'WebContent/lib/bootstrap/css/*.css'
+				],
+				dest: 'WebContent/css/<%= pkg.resLibName %>.css'
 			}
 		},
 		uglify: {
 			options: {
 				banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
 			},
-			dist: {
+			js: {
 				files: {
-					'WebContent/lib/<%= pkg.jsLibName %>.js': ['WebContent/lib/<%= pkg.jsLibName %>.min.js'],
-					'WebContent/js/index.js': ['WebContent/js/index.min.js']
+					'WebContent/js/index.min.js': ['WebContent/js/index.js'],
+					'WebContent/lib/<%= pkg.resLibName %>.min.js': ['WebContent/lib/<%= pkg.resLibName %>.js']
 
 				}
 			}
 		},
 		qunit: {
-			files: ['**/*.html']
+			files: ['WebContent/**/*.html']
 		},
 		jshint: {
 			files: ['Gruntfile.js', 'WebContent/js/**/*.js'],
@@ -58,6 +70,6 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('test', ['jshint', 'qunit']);
 
-	grunt.registerTask('default', ['jshint', 'clean', 'qunit', 'concat', 'uglify']);
+	grunt.registerTask('default', ['jshint', 'clean', 'concat', 'uglify']);
 
 };
