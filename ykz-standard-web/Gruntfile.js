@@ -121,13 +121,26 @@ module.exports = function(grunt) {
 		 * start of grunt-contrib-copy
 		 */
 		copy: {
-			main: {
+			fonts: {
 				files: [{
 					expand: true,
 					filter: 'isFile',
 					flatten: true,
-					src: ['WebContent/lib/bootstrap/fonts/**'],
+					src: [
+						'WebContent/lib/bootstrap/fonts/**'
+					],
 					dest: '<%= pkg.distPath %>/lib/fonts'
+				}],
+			},
+			html: {
+				files: [{
+					expand: true,
+					filter: 'isFile',
+					flatten: true,
+					src: [
+						'WebContent/*.html'
+					],
+					dest: '<%= pkg.distPath %>'
 				}],
 			}
 		},
@@ -163,6 +176,9 @@ module.exports = function(grunt) {
 		 * end of grunt-contrib-watch
 		 */
 
+		/*
+		 * start of grunt-contrib-imagemin
+		 */
 		imagemin: { // Task 
 			dynamic: { // Another target 
 				files: [{
@@ -172,7 +188,54 @@ module.exports = function(grunt) {
 					dest: '<%= pkg.distPath %>/img' // Destination path prefix 
 				}]
 			}
+		},
+		/*
+		 * end of grunt-contrib-imagemin
+		 */
+
+		/*
+		 * start of grunt-text-replace
+		 */
+		replace: {
+			another_example: {
+				src: ['<%= pkg.distPath %>/*.html'],
+				overwrite: true,
+				replacements: [
+					{
+						from: /\{WJZS_RES_VERSION\}/g,
+						to: "<%= grunt.template.today('yyyymmddHHMMss') %>"
+					},
+					{
+						from: /<link(.*)href="(lib\/bootstrap\/css\/bootstrap).css\?(.*)>/g,
+						to: '<link rel="stylesheet" href="lib/css/<%= pkg.resLibName %>.min.css?$3>'
+					},
+					{
+						from: /<link(.*)href="lib\/bootstrap(.*)\.css(.*)>/g,
+						to: ''
+					},
+					{
+						from: /<link(.*)href="css\/(.*)\.css\?(.*)>/g,
+						to: '<link rel="stylesheet" href="css/$2.min.css?$3>'
+					},
+					{
+						from: /<script(.*)src="lib\/jquery\/jquery.js(.*)><\/script>/g,
+						to: '<script type="text/javascript" src="lib/js/<%= pkg.resLibName %>.min.js$2></script>'
+					},
+					{
+						from: /<script(.*)src="lib\/(.*)\/js\/(.*).js(.*)><\/script>/g,
+						to: ''
+					},
+					{
+						from: /<script(.*)src="js\/(.*)\.js(.*)><\/script>/g,
+						to: '<script type="text/javascript" src="js/$2.min.js$3></script>'
+					},
+
+				]
+			}
 		}
+		/*
+		 * end of grunt-text-replace
+		 */
 
 	});
 
@@ -186,9 +249,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-less');
 	grunt.loadNpmTasks('grunt-contrib-imagemin');
+	grunt.loadNpmTasks('grunt-text-replace');
 
 	grunt.registerTask('test', ['jshint', 'qunit']);
 
-	grunt.registerTask('default', ['clean', 'less', 'jshint', 'copy', 'concat', 'uglify', 'cssmin', 'imagemin']);
+	grunt.registerTask('default', ['clean', 'less', 'jshint', 'copy', 'replace', 'concat', 'uglify', 'cssmin', 'imagemin']);
 
 };
