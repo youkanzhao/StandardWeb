@@ -90,7 +90,7 @@ module.exports = function(grunt) {
 		 * end of grunt-contrib-jshint
 		 */
 
-		
+
 
 		/*
 		 * start of grunt-contrib-cssmin
@@ -158,10 +158,22 @@ module.exports = function(grunt) {
 				'WebContent/css/*.less'
 			],
 			tasks: ['jshint', 'less']
-		}
+		},
 		/*
 		 * end of grunt-contrib-watch
 		 */
+
+		imagemin: { // Task 
+			dynamic: { // Another target 
+				files: [{
+					expand: true, // Enable dynamic expansion 
+					cwd: 'WebContent/img', // Src matches are relative to this path 
+					src: ['**/*.{png,jpg,gif}'], // Actual patterns to match 
+					dest: '<%= pkg.distPath %>/img' // Destination path prefix 
+				}]
+			}
+		}
+
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -173,9 +185,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-less');
+	grunt.loadNpmTasks('grunt-contrib-imagemin');
 
 	grunt.registerTask('test', ['jshint', 'qunit']);
 
-	grunt.registerTask('default', ['clean', 'less', 'jshint', 'copy', 'concat', 'uglify', 'cssmin']);
+	grunt.registerTask('default', ['clean', 'less', 'jshint', 'copy', 'concat', 'uglify', 'cssmin', 'imagemin']);
 
 };
