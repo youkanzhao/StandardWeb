@@ -3,9 +3,9 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		clean: {
-			js: ['**/*.min.js', 
-				 'WebContent/lib/<%= pkg.resLibName %>.js'
-				],
+			js: ['**/*.min.js',
+				'WebContent/lib/<%= pkg.resLibName %>.js'
+			],
 			css: [
 				'**/*.min.css',
 				'WebContent/css/<%= pkg.resLibName %>.css'
@@ -58,6 +58,17 @@ module.exports = function(grunt) {
 		watch: {
 			files: ['<%= jshint.files %>'],
 			tasks: ['jshint', 'qunit']
+		},
+		cssmin: {
+			target: {
+				files: [{
+					expand: true,
+					cwd: 'WebContent/css',
+					src: ['*.css', '!*.min.css'],
+					dest: 'WebContent/css',
+					ext: '.min.css'
+				}]
+			}
 		}
 	});
 
@@ -67,9 +78,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
 
 	grunt.registerTask('test', ['jshint', 'qunit']);
 
-	grunt.registerTask('default', ['jshint', 'clean', 'concat', 'uglify']);
+	grunt.registerTask('default', ['jshint', 'clean', 'concat', 'uglify', 'cssmin']);
 
 };
