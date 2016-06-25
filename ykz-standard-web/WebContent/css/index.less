@@ -1,0 +1,31 @@
+@common-color:#000;
+
+.common-box(@borderWidth : 5px) {
+	color:@common-color;
+	border:@borderWidth @common-color solid;
+	width:@borderWidth*30;
+	height:@borderWidth*30;
+}
+
+
+.content-box{
+	.common-box(20px);
+}
+
+.common-footer{
+	background-color:@common-color;
+	.common-box(25px);
+}
+
+.common-header{
+	background-color:#ccc;
+	.common-box(25px);
+	float:left;
+	font-size:33px;
+}
+
+.common-nav{
+	float:right;
+	background-color:@common-color;
+	.common-box(25px);
+}
