@@ -1,7 +1,29 @@
-a#alink{
-	padding:300px;
-	font-size:30px;
-	color:red;
-	display: block;
-	float: left;
+.content-box {
+  color: #ff00ff;
+  border: 20px #ff00ff solid;
+  width: 600px;
+  height: 600px;
+}
+.common-footer {
+  background-color: #ff00ff;
+  color: #ff00ff;
+  border: 25px #ff00ff solid;
+  width: 750px;
+  height: 750px;
+}
+.common-header {
+  background-color: #fff;
+  color: #ff00ff;
+  border: 25px #ff00ff solid;
+  width: 750px;
+  height: 750px;
+  float: left;
+}
+.common-nav {
+  float: right;
+  background-color: #ff00ff;
+  color: #ff00ff;
+  border: 25px #ff00ff solid;
+  width: 750px;
+  height: 750px;
 }
