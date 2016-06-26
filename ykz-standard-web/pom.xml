@@ -2,12 +2,10 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.ykz.standard.web</groupId>
     <artifactId>ykz-standard-web</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>war</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
-        <res.tag>\{YKZ_RES_VERSION\}</res.tag>
     </properties>
     <build>
         <sourceDirectory>src</sourceDirectory>
@@ -31,10 +29,60 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
+                <version>1.5.0</version>
                 <executions>
                     <execution>
-                        <phase>prepare-package</phase>
+                        <id>grunt-init</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>npm</executable>
+                            <arguments>
+                                <argument>install</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                    	<id>grunt-default</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>grunt</executable>
+                            <arguments>
+                                <argument>default</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+					
+					<execution>
+						<id>grunt-clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>grunt</executable>
+                            <arguments>
+                                <argument>clean</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+
+                </executions>
+                
+            </plugin>
+            <!-- <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.5.0</version>
+                <executions>
+                    <execution>
+                        <phase>clean</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
@@ -42,8 +90,11 @@
                 </executions>
                 <configuration>
                     <executable>grunt</executable>
+                    <arguments>
+                        <argument>clean</argument>
+                    </arguments>
                 </configuration>
-            </plugin>
+            </plugin> -->
         </plugins>
     </build>
 </project>
