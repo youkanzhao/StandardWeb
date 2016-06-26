@@ -1,15 +1,20 @@
-@common-color:#000;
+@common-color:#ff00ff;
 
 .common-box(@borderWidth : 5px) {
 	color:@common-color;
 	border:@borderWidth @common-color solid;
-	width:@borderWidth*30;
-	height:@borderWidth*30;
+	width:@borderWidth*20;
+	height:@borderWidth*20;
+	border-radius: @borderWidth;
 }
 
 
 .content-box{
 	.common-box(20px);
+}
+
+.a{
+	
 }
 
 
@@ -20,9 +25,9 @@
 
 .common-header{
 	background-color:#ccc;
-	.common-box(25px);
+	.common-box(30px);
 	float:left;
-	font-size:33px;
+	font-size:20px;
 }
 
 .common-nav{

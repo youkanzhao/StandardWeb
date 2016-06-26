@@ -1,7 +1,7 @@
 {
   "name": "ykz-standard-web",
   "resLibName": "ykz-web-lib",
-  "distPath": "WebContent/dist",
+  "distPath": "WebContent/build",
   "version": "1.0.0",
   "devDependencies": {
     "grunt": "^0.4.5",

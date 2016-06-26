@@ -47,7 +47,7 @@ module.exports = function(grunt) {
 		 */
 		uglify: {
 			options: {
-				banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+				banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
 			},
 			js: {
 				files: {
@@ -168,9 +168,10 @@ module.exports = function(grunt) {
 		watch: {
 			files: [
 				'<%= jshint.files %>',
-				'WebContent/css/*.less'
+				'WebContent/css/*.less',
+				'WebContent/*.html'
 			],
-			tasks: ['jshint', 'less']
+			tasks: ['clean', 'less', 'jshint', 'copy', 'replace', 'concat', 'uglify', 'cssmin', 'imagemin']
 		},
 		/*
 		 * end of grunt-contrib-watch
