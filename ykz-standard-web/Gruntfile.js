@@ -6,7 +6,7 @@ module.exports = function(grunt) {
 		 * start of grunt-contrib-clean
 		 */
 		clean: {
-			dist: [
+			build: [
 				'<%= pkg.distPath %>/**',
 				'WebContent/css/*.css'
 			]
@@ -96,7 +96,7 @@ module.exports = function(grunt) {
 		 * start of grunt-contrib-cssmin
 		 */
 		cssmin: {
-			target: {
+			build: {
 				files: [{
 					expand: true,
 					cwd: 'WebContent/css',
@@ -181,7 +181,7 @@ module.exports = function(grunt) {
 		 * start of grunt-contrib-imagemin
 		 */
 		imagemin: { // Task 
-			dynamic: { // Another target 
+			build: { // Another target 
 				files: [{
 					expand: true, // Enable dynamic expansion 
 					cwd: 'WebContent/img', // Src matches are relative to this path 
@@ -198,7 +198,7 @@ module.exports = function(grunt) {
 		 * start of grunt-text-replace
 		 */
 		replace: {
-			another_example: {
+			build: {
 				src: ['<%= pkg.distPath %>/*.html'],
 				overwrite: true,
 				replacements: [
